@@ -36,8 +36,12 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonDTO getPersonByFirstName(String firstName) {
         PersonDTO personDTO = personMapper.personToPersonDTO(personRepository.findByFirstName(firstName));
-        personDTO.setCustomerUrl("/api/v1/persons/" + personDTO.getId());
-        return personDTO;
+        if(personRepository.findByFirstName(firstName) != null) {
+            personDTO.setCustomerUrl("/api/v1/persons/" + personDTO.getId());
+            return personDTO;
+        }else{
+            throw (new ResourceNotFoundException());
+        }
     }
 
     @Override
@@ -48,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
                     personDTO.setCustomerUrl("/api/v1/person/" + person.getId());
                     return personDTO;
                 })
-                .orElseThrow(RuntimeException::new);//todo better exception handling
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -82,7 +86,7 @@ public class PersonServiceImpl implements PersonService {
             PersonDTO returnPersonDTO = personMapper.personToPersonDTO(personRepository.save(person));
             returnPersonDTO.setCustomerUrl("/api/v1/persons/" + returnPersonDTO.getId());
             return returnPersonDTO;
-                }).orElseThrow(RuntimeException::new);
+                }).orElseThrow(ResourceNotFoundException::new);
     }
 
     public void deletePerson(Long id) {
