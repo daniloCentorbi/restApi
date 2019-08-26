@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/persons")
 public class PersonController {
 
@@ -19,47 +19,51 @@ public class PersonController {
     }
 
     @GetMapping
-    public ResponseEntity<PersonListDTO> getallPersons(){
+    @ResponseStatus(HttpStatus.OK)
+    public PersonListDTO getallPersons(){
 
-        return new ResponseEntity<PersonListDTO>(
-                new PersonListDTO(personService.getAllPersons()), HttpStatus.OK);
+        return new PersonListDTO(personService.getAllPersons());
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<PersonDTO> getPersonByFirstName(@PathVariable String name){
+    @ResponseStatus(HttpStatus.OK)
+    public PersonDTO getPersonByFirstName(@PathVariable String name){
 
-        return new ResponseEntity<PersonDTO>(personService.getPersonByFirstName(name), HttpStatus.OK);
+        return personService.getPersonByFirstName(name);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonDTO> getPersonById(@PathVariable Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public PersonDTO getPersonById(@PathVariable Long id){
 
-        return new ResponseEntity<PersonDTO>(personService.getPersonById(id), HttpStatus.OK);
+        return personService.getPersonById(id);
     }
 
     @PostMapping
-    public ResponseEntity<PersonDTO> createNewPerson(@RequestBody PersonDTO personDTO){
+    @ResponseStatus(HttpStatus.CREATED)
+    public PersonDTO createNewPerson(@RequestBody PersonDTO personDTO){
 
-        return new ResponseEntity<PersonDTO>(personService.createNewPerson(personDTO), HttpStatus.CREATED);
+        return (personService.createNewPerson(personDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonDTO> updatePerson(@PathVariable Long id, @RequestBody PersonDTO personDTO){
+    @ResponseStatus(HttpStatus.OK)
+    public PersonDTO updatePerson(@PathVariable Long id, @RequestBody PersonDTO personDTO){
 
-        return new ResponseEntity<PersonDTO>(personService.updatePerson(id, personDTO), HttpStatus.OK);
+        return personService.updatePerson(id, personDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PersonDTO> patchPerson(@PathVariable Long id, @RequestBody PersonDTO personDTO){
+    @ResponseStatus(HttpStatus.OK)
+    public PersonDTO patchPerson(@PathVariable Long id, @RequestBody PersonDTO personDTO){
 
-        return new ResponseEntity<PersonDTO>(personService.patchPerson(id, personDTO), HttpStatus.OK);
+        return personService.patchPerson(id, personDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePerson(@PathVariable Long id){
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePerson(@PathVariable Long id){
 
         personService.deletePerson(id);
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
