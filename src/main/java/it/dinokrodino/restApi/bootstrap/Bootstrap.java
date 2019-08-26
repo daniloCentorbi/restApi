@@ -3,7 +3,9 @@ package it.dinokrodino.restApi.bootstrap;
 import it.dinokrodino.restApi.domain.Person;
 import it.dinokrodino.restApi.repositories.PersonRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Bootstrap implements CommandLineRunner {
 
     private PersonRepository personRepository;
