@@ -2,6 +2,7 @@ package it.dinokrodino.restApi.controllers.v1;
 
 import it.dinokrodino.restApi.api.v1.model.PersonDTO;
 import it.dinokrodino.restApi.service.PersonService;
+import it.dinokrodino.restApi.service.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -173,4 +174,16 @@ public class PersonControllerTest {
         verify(personService).deletePerson(anyLong());
 
     }
+
+
+//    @Test
+//    public void testGetByIdNotFound() throws Exception {
+//
+//        when(personService.getPersonById(anyLong())).thenThrow(ResourceNotFoundException.class);
+//
+//        mockMvc.perform(get("/api/v1/persons/1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNotFound());
+//    }
+
 }

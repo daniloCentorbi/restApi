@@ -1,5 +1,7 @@
 package it.dinokrodino.restApi.controllers.v1;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import it.dinokrodino.restApi.api.v1.model.PersonDTO;
 import it.dinokrodino.restApi.api.v1.model.PersonListDTO;
 import it.dinokrodino.restApi.service.PersonService;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Api("Pet clinic API")
 @RestController
 @RequestMapping("/api/v1/persons")
 public class PersonController {
@@ -18,6 +21,7 @@ public class PersonController {
         this.personService = personService;
     }
 
+    @ApiOperation("get list all persons")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public PersonListDTO getallPersons(){
